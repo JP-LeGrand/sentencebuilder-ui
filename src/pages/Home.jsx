@@ -1,6 +1,5 @@
 import React from "react";
 import { Grid, Typography, Button } from "@material-ui/core";
-import WordTypeTabs from "../components/WordTypeTabs";
 
 export const Home = () => {
   return (
@@ -16,9 +15,6 @@ export const Home = () => {
           The types are: Noun, Verb, Adjective, Adverb, Pronoun, Preposition,
           Conjunction, Determiner and Exclamation.
         </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <WordTypeTabs />
       </Grid>
     </Grid>
   );
