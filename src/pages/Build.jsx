@@ -3,7 +3,7 @@ import { Grid, Typography } from "@material-ui/core";
 
 export const Build = () => {
   return (
-    <Grid>
+    <Grid container>
       <Typography>Build Page</Typography>
     </Grid>
   );

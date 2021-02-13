@@ -3,7 +3,7 @@ import { Grid, Typography } from "@material-ui/core";
 
 export const History = () => {
   return (
-    <Grid>
+    <Grid container>
       <Typography>History Page</Typography>
     </Grid>
   );
