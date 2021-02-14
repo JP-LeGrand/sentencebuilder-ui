@@ -1,21 +1,82 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Typography } from "@material-ui/core";
+import NavigationBar from "../components/NavigationBar";
+import TypeAccordion from "../components/TypeAccordion";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import * as SentenceBuilderActions from "../redux/sentenceBuilderActions.js";
+import { connect } from "react-redux";
 
-export const Home = () => {
+const Home = (props) => {
+  const { wordTypes, words, getWords, getWordTypes } = props;
+  const [word, setWord] = useState(false);
+  const [wordType, setWordTypes] = useState(false);
+
+  useEffect(() => {
+    getWordTypes();
+    getWords();
+  }, [getWordTypes, getWords]);
+
+  useEffect(() => {
+    if (words) {
+      setWord(words);
+    }
+    if (wordTypes) {
+      setWordTypes(wordTypes);
+    }
+  }, [words, wordTypes]);
+
   return (
-    <Grid container spacing={2}>
+    <Grid container>
       <Grid item xs={12}>
-        <Typography>
-          Sentence builder is web application that allows you to dynamically
-          build a sentence by selecting words based on their word types.
-        </Typography>
+        <NavigationBar />
       </Grid>
-      <Grid xs={12}>
-        <Typography>
-          The types are: Noun, Verb, Adjective, Adverb, Pronoun, Preposition,
-          Conjunction, Determiner and Exclamation.
-        </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography>
+            Sentence builder is web application that allows you to dynamically
+            build a sentence by selecting words based on their word types.
+          </Typography>
+        </Grid>
+        <Grid xs={12}>
+          <Typography>
+            The types are: Noun, Verb, Adjective, Adverb, Pronoun, Preposition,
+            Conjunction, Determiner and Exclamation.
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          {word && wordType && (
+            <TypeAccordion wordTypes={wordType} words={word} />
+          )}
+        </Grid>
       </Grid>
     </Grid>
   );
 };
+
+Home.propTypes = {
+  words: PropTypes.array,
+  wordTypes: PropTypes.array,
+  getWordTypes: PropTypes.func,
+  getWords: PropTypes.func,
+};
+
+export const mapStateToProps = (state) => {
+  const sb = state.sentenceBuilder;
+  return {
+    wordTypes: sb.wordTypes,
+    words: sb.words,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getWordTypes: bindActionCreators(
+      SentenceBuilderActions.getWordTypes,
+      dispatch
+    ),
+    getWords: bindActionCreators(SentenceBuilderActions.getWords, dispatch),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -1,8 +1,8 @@
 export default {
   sentenceBuilder: {
-    wordTypes: [],
-    words: [],
-    sentenceHistory: [],
+    wordTypes: false,
+    words: false,
+    sentenceHistory: false,
     wordError: false,
     typeError: false,
     submitError: false,
