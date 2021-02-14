@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography } from "@material-ui/core";
 import NavigationBar from "../components/NavigationBar";
-import TypeAccordion from "../components/TypeAccordion";
+import WordType from "../components/WordTypeChip";
+import WordChip from "../components/WordChip";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import * as SentenceBuilderActions from "../redux/sentenceBuilderActions.js";
 import { connect } from "react-redux";
+import { toUpper, filterWordsToType } from "../helpers/UtilityFunctions";
 
 const Home = (props) => {
   const { wordTypes, words, getWords, getWordTypes } = props;
   const [word, setWord] = useState(false);
   const [wordType, setWordTypes] = useState(false);
+  const [wordTypeRef, setWordTypeRef] = useState(false);
 
   useEffect(() => {
     getWordTypes();
@@ -46,7 +49,12 @@ const Home = (props) => {
         </Grid>
         <Grid item xs={12}>
           {word && wordType && (
-            <TypeAccordion wordTypes={wordType} words={word} />
+            <React.Fragment>
+              <WordType wordTypes={wordType} homeRef={setWordTypeRef} />
+              {filterWordsToType(words, wordTypeRef.type).map((wtt, index) => (
+                <WordChip key={index} word={toUpper(wtt.word)} />
+              ))}
+            </React.Fragment>
           )}
         </Grid>
       </Grid>
