@@ -26,7 +26,7 @@ export default function WordTypes(props) {
 
   useEffect(() => {
     homeRef({ type });
-  }, [type]);
+  }, [homeRef, type]);
 
   return (
     <Paper component="ul" className={classes.root}>
