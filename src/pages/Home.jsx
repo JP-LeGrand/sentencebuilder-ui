@@ -46,7 +46,7 @@ const Home = (props) => {
     if (wordTypes) {
       setWordTypes(wordTypes);
     }
-  }, [words, wordTypes, sentence]);
+  }, [words, wordTypes]);
 
   const submitSentences = () => {
     if (sentence.length > 0) {
