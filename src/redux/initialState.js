@@ -8,5 +8,6 @@ export default {
     submitError: false,
     submitSuccess: false,
     sentenceError: false,
+    sentence: [],
   },
 };

@@ -48,3 +48,11 @@ export const getSentenceHistory = () => async (dispatch) => {
     throw error;
   }
 };
+
+export const buildSentence = (word) => async (dispatch) => {
+  dispatch({ type: Types.SENTENCE_ADD_WORD, payload: word });
+};
+
+export const breakSentence = (word) => async (dispatch) => {
+  dispatch({ type: Types.SENTENCE_REMOVE_WORD, payload: word });
+};

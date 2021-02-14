@@ -1,8 +1,8 @@
 import moment from "moment";
 
 export const readableDate = (dateTime) => {
-  dateTime = moment();
-  return dateTime.format("dddd Do MMMM, YYYY");
+  var day = moment(dateTime);
+  return day.format("MMMM Do YYYY, h:mm:ss a");
 };
 
 export const toUpper = (text) =>

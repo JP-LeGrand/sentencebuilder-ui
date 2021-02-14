@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Typography, Paper } from "@material-ui/core";
+import { Grid, Typography, Paper, Button } from "@material-ui/core";
 import NavigationBar from "../components/NavigationBar";
 import WordType from "../components/WordTypeChip";
 import WordChip from "../components/WordChip";
@@ -10,15 +10,26 @@ import { connect } from "react-redux";
 import { toUpper, filterWordsToType } from "../helpers/UtilityFunctions";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   appDescription: {
     textAlign: "center",
+  },
+  submitButton: {
+    display: "flex",
+    justifyContent: "center",
   },
 }));
 
 const Home = (props) => {
   const classes = useStyles();
-  const { wordTypes, words, getWords, getWordTypes } = props;
+  const {
+    wordTypes,
+    words,
+    getWords,
+    getWordTypes,
+    sentence,
+    submitSentence,
+  } = props;
   const [word, setWord] = useState(false);
   const [wordType, setWordTypes] = useState(false);
   const [wordTypeRef, setWordTypeRef] = useState(false);
@@ -35,7 +46,14 @@ const Home = (props) => {
     if (wordTypes) {
       setWordTypes(wordTypes);
     }
-  }, [words, wordTypes]);
+  }, [words, wordTypes, sentence]);
+
+  const submitSentences = () => {
+    if (sentence.length > 0) {
+      var dateTime = new Date(Date.now());
+      submitSentence({ sentence, dateTime });
+    }
+  };
 
   return (
     <Grid container>
@@ -51,14 +69,43 @@ const Home = (props) => {
         </Grid>
         <Grid item xs={12}>
           {word && wordType && (
-            <React.Fragment>
-              <WordType wordTypes={wordType} homeRef={setWordTypeRef} />
-              <Paper>
-                {filterWordsToType(words, wordTypeRef.type).map((wtt) => (
-                  <WordChip key={wtt._id} word={toUpper(wtt.word)} />
-                ))}
-              </Paper>
-            </React.Fragment>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <WordType wordTypes={wordType} homeRef={setWordTypeRef} />
+              </Grid>
+              <Grid item xs={12}>
+                <Paper>
+                  {filterWordsToType(words, wordTypeRef.type).map((wtt) => (
+                    <WordChip
+                      key={wtt._id}
+                      word={toUpper(wtt.word)}
+                      wordObject={wtt}
+                    />
+                  ))}
+                </Paper>
+              </Grid>
+            </Grid>
+          )}
+        </Grid>
+        <Grid item xs={12}>
+          {sentence && (
+            <Paper>
+              {sentence.map((s) => (
+                <WordChip
+                  key={s._id}
+                  word={toUpper(s.word)}
+                  wordObject={s}
+                  enableDelete={true}
+                />
+              ))}
+            </Paper>
+          )}
+        </Grid>
+        <Grid item xs={12} className={classes.submitButton}>
+          {sentence && sentence.length > 0 && (
+            <Button onClick={() => submitSentences()} color="primary">
+              Submit sentence
+            </Button>
           )}
         </Grid>
       </Grid>
@@ -71,6 +118,8 @@ Home.propTypes = {
   wordTypes: PropTypes.array,
   getWordTypes: PropTypes.func,
   getWords: PropTypes.func,
+  sentence: PropTypes.array,
+  submitSentence: PropTypes.func,
 };
 
 export const mapStateToProps = (state) => {
@@ -78,6 +127,7 @@ export const mapStateToProps = (state) => {
   return {
     wordTypes: sb.wordTypes,
     words: sb.words,
+    sentence: sb.sentence,
   };
 };
 
@@ -88,6 +138,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch
     ),
     getWords: bindActionCreators(SentenceBuilderActions.getWords, dispatch),
+    submitSentence: bindActionCreators(
+      SentenceBuilderActions.submitSentence,
+      dispatch
+    ),
   };
 };
 
