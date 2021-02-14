@@ -34,6 +34,7 @@ export default function WordTypes(props) {
         return (
           <li key={index}>
             <Chip
+              color="primary"
               component="button"
               onClick={() => setType(wordType)}
               clickable

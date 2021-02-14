@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Paper } from "@material-ui/core";
 import NavigationBar from "../components/NavigationBar";
 import WordType from "../components/WordTypeChip";
 import WordChip from "../components/WordChip";
@@ -8,8 +8,16 @@ import { bindActionCreators } from "redux";
 import * as SentenceBuilderActions from "../redux/sentenceBuilderActions.js";
 import { connect } from "react-redux";
 import { toUpper, filterWordsToType } from "../helpers/UtilityFunctions";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  appDescription: {
+    textAlign: "center",
+  },
+}));
 
 const Home = (props) => {
+  const classes = useStyles();
   const { wordTypes, words, getWords, getWordTypes } = props;
   const [word, setWord] = useState(false);
   const [wordType, setWordTypes] = useState(false);
@@ -36,24 +44,22 @@ const Home = (props) => {
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography>
+          <Typography className={classes.appDescription}>
             Sentence builder is web application that allows you to dynamically
             build a sentence by selecting words based on their word types.
-          </Typography>
-        </Grid>
-        <Grid xs={12}>
-          <Typography>
-            The types are: Noun, Verb, Adjective, Adverb, Pronoun, Preposition,
-            Conjunction, Determiner and Exclamation.
           </Typography>
         </Grid>
         <Grid item xs={12}>
           {word && wordType && (
             <React.Fragment>
               <WordType wordTypes={wordType} homeRef={setWordTypeRef} />
-              {filterWordsToType(words, wordTypeRef.type).map((wtt, index) => (
-                <WordChip key={index} word={toUpper(wtt.word)} />
-              ))}
+              <Paper>
+                {filterWordsToType(words, wordTypeRef.type).map(
+                  (wtt, index) => (
+                    <WordChip key={index} word={toUpper(wtt.word)} />
+                  )
+                )}
+              </Paper>
             </React.Fragment>
           )}
         </Grid>
