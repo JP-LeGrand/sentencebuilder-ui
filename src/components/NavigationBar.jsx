@@ -4,6 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import history from "../history";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,10 +23,16 @@ const NavigationBar = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h4" className={classes.title}>
+        <Typography
+          onClick={() => history.push("/")}
+          variant="h4"
+          className={classes.title}
+        >
           Sentence Builder
         </Typography>
-        <Button color="inherit">Sentence History</Button>
+        <Button onClick={() => history.push("/History")} color="inherit">
+          Sentence History
+        </Button>
       </Toolbar>
     </AppBar>
   );
