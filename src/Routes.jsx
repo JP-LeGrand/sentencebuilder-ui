@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./pages/Home";
 import History from "./pages/History";
 
