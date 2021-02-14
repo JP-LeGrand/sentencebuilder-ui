@@ -26,7 +26,7 @@ const SentenceBuilderReducer = (
       sentenceArray.push(action.payload);
       return {
         ...state,
-        sentence: sentenceArray,
+        sentence: [...sentenceArray],
       };
     case Types.SENTENCE_REMOVE_WORD:
       return {
