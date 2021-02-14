@@ -33,6 +33,11 @@ const SentenceBuilderReducer = (
         ...state,
         sentence: sentenceArray.filter((s) => s._id !== action.payload._id),
       };
+    case Types.SET_WORD_TYPE:
+      return {
+        ...state,
+        type: action.payload,
+      };
     default:
       return state;
   }

@@ -4,6 +4,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
+import TablePagination from "@material-ui/core/TablePagination";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
@@ -15,63 +16,85 @@ import {
   joinWords,
 } from "../helpers/UtilityFunctions";
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
-
-const StyledTableRow = withStyles((theme) => ({
-  root: {
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-}))(TableRow);
-
 const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
+  root: {
+    width: "100%",
+  },
+  container: {
+    maxHeight: 500,
+  },
+  heading: {
+    fontWeight: "bold",
   },
 });
 
 export default function CustomizedTables(props) {
   const classes = useStyles();
   const { rows } = props;
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Sentence</StyledTableCell>
-            <StyledTableCell align="right">
-              Word type combinations
-            </StyledTableCell>
-            <StyledTableCell align="right">Date</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            <StyledTableRow key={index}>
-              <StyledTableCell>{joinWords(row.sentence)}</StyledTableCell>
-              <StyledTableCell align="right">
-                {row.sentence.map((s, i) => (
-                  <Typography key={i}>{ToUpper(s.type)}</Typography>
-                ))}
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                {ReadableDate(new Date(row.dateTime))}
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Paper className={classes.root}>
+      <TableContainer className={classes.container}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <Typography className={classes.heading}>Sentence</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography className={classes.heading}>
+                  Word type combinations
+                </Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography className={classes.heading}>Date</Typography>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  <TableCell>
+                    <Typography>{joinWords(row.sentence)}</Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    {row.sentence.map((s, i) => (
+                      <Typography key={i}>{ToUpper(s.type)}</Typography>
+                    ))}
+                  </TableCell>
+                  <TableCell align="right">
+                    <Typography>
+                      {ReadableDate(new Date(row.dateTime))}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+    </Paper>
   );
 }
 

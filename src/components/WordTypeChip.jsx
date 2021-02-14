@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
 import Paper from "@material-ui/core/Paper";
 import PropTypes from "prop-types";
 import { toUpper } from "../helpers/UtilityFunctions";
+import { bindActionCreators } from "redux";
+import * as SentenceBuilderActions from "../redux/sentenceBuilderActions.js";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,14 +22,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function WordTypes(props) {
+const WordTypes = (props) => {
   const classes = useStyles();
-  const { wordTypes, homeRef } = props;
-  const [type, setType] = useState("");
-
-  useEffect(() => {
-    homeRef({ type });
-  }, [homeRef, type]);
+  const { wordTypes, setType } = props;
 
   return (
     <Paper component="ul" className={classes.root}>
@@ -47,9 +45,17 @@ export default function WordTypes(props) {
       })}
     </Paper>
   );
-}
+};
 
 WordTypes.propTypes = {
   wordTypes: PropTypes.array,
-  homeRef: PropTypes.func,
+  setType: PropTypes.func,
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setType: bindActionCreators(SentenceBuilderActions.setType, dispatch),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(WordTypes);

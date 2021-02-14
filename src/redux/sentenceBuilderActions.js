@@ -56,3 +56,6 @@ export const buildSentence = (word) => async (dispatch) => {
 export const breakSentence = (word) => async (dispatch) => {
   dispatch({ type: Types.SENTENCE_REMOVE_WORD, payload: word });
 };
+export const setType = (type) => async (dispatch) => {
+  dispatch({ type: Types.SET_WORD_TYPE, payload: type });
+};

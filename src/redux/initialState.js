@@ -9,5 +9,6 @@ export default {
     submitSuccess: false,
     sentenceError: false,
     sentence: [],
+    type: "",
   },
 };

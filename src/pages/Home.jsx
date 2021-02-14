@@ -18,6 +18,10 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     justifyContent: "center",
   },
+  btnSubmit: {
+    backgroundColor: "#3f51b5",
+    color: "#fff",
+  },
 }));
 
 const Home = (props) => {
@@ -29,10 +33,10 @@ const Home = (props) => {
     getWordTypes,
     sentence,
     submitSentence,
+    type,
   } = props;
   const [word, setWord] = useState(false);
   const [wordType, setWordTypes] = useState(false);
-  const [wordTypeRef, setWordTypeRef] = useState(false);
 
   useEffect(() => {
     getWordTypes();
@@ -62,7 +66,7 @@ const Home = (props) => {
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography className={classes.appDescription}>
+          <Typography variant="h5" className={classes.appDescription}>
             Sentence builder is web application that allows you to dynamically
             build a sentence by selecting words based on their word types.
           </Typography>
@@ -71,11 +75,11 @@ const Home = (props) => {
           {word && wordType && (
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <WordType wordTypes={wordType} homeRef={setWordTypeRef} />
+                <WordType wordTypes={wordType} />
               </Grid>
               <Grid item xs={12}>
                 <Paper>
-                  {filterWordsToType(words, wordTypeRef.type).map((wtt) => (
+                  {filterWordsToType(words, type).map((wtt) => (
                     <WordChip
                       key={wtt._id}
                       word={toUpper(wtt.word)}
@@ -103,7 +107,11 @@ const Home = (props) => {
         </Grid>
         <Grid item xs={12} className={classes.submitButton}>
           {sentence && sentence.length > 0 && (
-            <Button onClick={() => submitSentences()} color="primary">
+            <Button
+              className={classes.btnSubmit}
+              onClick={() => submitSentences()}
+              color="primary"
+            >
               Submit sentence
             </Button>
           )}
@@ -120,6 +128,7 @@ Home.propTypes = {
   getWords: PropTypes.func,
   sentence: PropTypes.array,
   submitSentence: PropTypes.func,
+  type: PropTypes.string,
 };
 
 export const mapStateToProps = (state) => {
@@ -128,6 +137,7 @@ export const mapStateToProps = (state) => {
     wordTypes: sb.wordTypes,
     words: sb.words,
     sentence: sb.sentence,
+    type: sb.type,
   };
 };
 

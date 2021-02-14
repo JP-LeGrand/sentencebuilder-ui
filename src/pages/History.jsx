@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import NavigationBar from "../components/NavigationBar";
 import BuilderTable from "../components/BuilderTable";
 import { bindActionCreators } from "redux";
@@ -27,6 +27,11 @@ const History = (props) => {
         <NavigationBar />
       </Grid>
       <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant="h5">
+            View history of submitted sentence
+          </Typography>
+        </Grid>
         {history && (
           <Grid item xs={12}>
             <BuilderTable rows={history} />
