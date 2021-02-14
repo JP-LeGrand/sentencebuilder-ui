@@ -38,6 +38,11 @@ const SentenceBuilderReducer = (
         ...state,
         type: action.payload,
       };
+    case Types.SUBMIT_SENTENCE_SUCCESS:
+      return {
+        ...state,
+        sentence: [],
+      };
     default:
       return state;
   }
