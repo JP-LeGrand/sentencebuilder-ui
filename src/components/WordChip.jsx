@@ -29,16 +29,23 @@ const WordChip = (props) => {
 
   return (
     <div className={classes.root}>
-      <Chip
-        deleteIcon={enableDelete}
-        label={word}
-        component="a"
-        onClick={() =>
-          enableDelete ? breakSentence(wordObject) : buildSentence(wordObject)
-        }
-        clickable
-        variant="outlined"
-      />
+      {!enableDelete ? (
+        <Chip
+          label={word}
+          component="a"
+          onClick={() => buildSentence(wordObject)}
+          clickable
+          variant="outlined"
+        />
+      ) : (
+        <Chip
+          label={word}
+          component="a"
+          onDelete={() => breakSentence(wordObject)}
+          clickable
+          variant="outlined"
+        />
+      )}
     </div>
   );
 };
