@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import {
   readableDate as ReadableDate,
   toUpper as ToUpper,
+  joinWords,
 } from "../helpers/UtilityFunctions";
 
 const StyledTableCell = withStyles((theme) => ({
@@ -57,9 +58,7 @@ export default function CustomizedTables(props) {
         <TableBody>
           {rows.map((row, index) => (
             <StyledTableRow key={index}>
-              <StyledTableCell>
-                {row.sentence.map((s) => `${s.word} `)}
-              </StyledTableCell>
+              <StyledTableCell>{joinWords(row.sentence)}</StyledTableCell>
               <StyledTableCell align="right">
                 {row.sentence.map((s, i) => (
                   <Typography key={i}>{ToUpper(s.type)}</Typography>

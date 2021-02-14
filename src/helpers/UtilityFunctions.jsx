@@ -10,3 +10,8 @@ export const toUpper = (text) =>
 
 export const filterWordsToType = (words, type) =>
   words.filter((w) => w.type === type);
+
+export const joinWords = (strArr) => {
+  var newStrArr = strArr.map((s) => s.word);
+  return toUpper(newStrArr.join(" "));
+};
