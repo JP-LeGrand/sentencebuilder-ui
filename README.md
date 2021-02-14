@@ -6,7 +6,7 @@ This client side app is a node project in react that allows you to dynamically b
 
 Install the node packages by running:
 
-### 'yarn'
+### `yarn`
 
 In the project directory, you can run:
 
