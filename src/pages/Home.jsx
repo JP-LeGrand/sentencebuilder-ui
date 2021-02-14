@@ -54,11 +54,9 @@ const Home = (props) => {
             <React.Fragment>
               <WordType wordTypes={wordType} homeRef={setWordTypeRef} />
               <Paper>
-                {filterWordsToType(words, wordTypeRef.type).map(
-                  (wtt, index) => (
-                    <WordChip key={index} word={toUpper(wtt.word)} />
-                  )
-                )}
+                {filterWordsToType(words, wordTypeRef.type).map((wtt) => (
+                  <WordChip key={wtt._id} word={toUpper(wtt.word)} />
+                ))}
               </Paper>
             </React.Fragment>
           )}
