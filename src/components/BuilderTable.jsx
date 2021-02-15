@@ -64,6 +64,7 @@ export default function CustomizedTables(props) {
           </TableHead>
           <TableBody>
             {rows
+              .sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
