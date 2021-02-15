@@ -31,10 +31,11 @@ export const submitSentence = (sentenceData) => async (dispatch) => {
     );
     if (response.status === 200) {
       dispatch({ type: Types.SUBMIT_SENTENCE_SUCCESS });
+      return response;
     }
   } catch (error) {
     dispatch({ type: Types.SUBMIT_SENTENCE_ERROR });
-    throw error;
+    return error;
   }
 };
 

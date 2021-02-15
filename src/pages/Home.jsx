@@ -9,6 +9,12 @@ import * as SentenceBuilderActions from "../redux/sentenceBuilderActions.js";
 import { connect } from "react-redux";
 import { toUpper, filterWordsToType } from "../helpers/UtilityFunctions";
 import { makeStyles } from "@material-ui/core/styles";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles(() => ({
   appDescription: {
@@ -37,6 +43,7 @@ const Home = (props) => {
   } = props;
   const [word, setWord] = useState(false);
   const [wordType, setWordTypes] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     getWordTypes();
@@ -55,10 +62,21 @@ const Home = (props) => {
   const submitSentences = () => {
     if (sentence.length > 0) {
       var dateTime = new Date(Date.now());
-      submitSentence({ sentence, dateTime });
+      submitSentence({ sentence, dateTime }).then((response) => {
+        if (response) {
+          setOpen(true);
+        }
+      });
     }
   };
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -116,6 +134,13 @@ const Home = (props) => {
             </Button>
           )}
         </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success">
+            Sentence submitted successfully!
+          </Alert>
+        </Snackbar>
       </Grid>
     </Grid>
   );
