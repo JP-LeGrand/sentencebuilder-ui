@@ -1,4 +1,4 @@
-export default {
+const InitialState = {
   sentenceBuilder: {
     wordTypes: false,
     words: false,
@@ -12,3 +12,4 @@ export default {
     type: "",
   },
 };
+export default InitialState;
