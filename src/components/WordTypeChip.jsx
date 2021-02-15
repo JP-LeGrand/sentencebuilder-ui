@@ -24,12 +24,24 @@ const useStyles = makeStyles((theme) => ({
 
 const WordTypes = (props) => {
   const classes = useStyles();
-  const { wordTypes, setType } = props;
+  const { wordTypes, setType, type } = props;
 
   return (
     <Paper component="ul" className={classes.root}>
-      {wordTypes.map((wordType, index) => {
-        return (
+      {wordTypes.map((wordType, index) =>
+        wordType === type ? (
+          <li key={index}>
+            <Chip
+              color="primary"
+              component="button"
+              onClick={() => setType(wordType)}
+              clickable
+              variant="default"
+              label={toUpper(wordType)}
+              className={classes.chip}
+            />
+          </li>
+        ) : (
           <li key={index}>
             <Chip
               color="primary"
@@ -41,8 +53,8 @@ const WordTypes = (props) => {
               className={classes.chip}
             />
           </li>
-        );
-      })}
+        )
+      )}
     </Paper>
   );
 };
@@ -50,6 +62,14 @@ const WordTypes = (props) => {
 WordTypes.propTypes = {
   wordTypes: PropTypes.array,
   setType: PropTypes.func,
+  type: PropTypes.string,
+};
+
+export const mapStateToProps = (state) => {
+  const sb = state.sentenceBuilder;
+  return {
+    type: sb.type,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -58,4 +78,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(WordTypes);
+export default connect(mapStateToProps, mapDispatchToProps)(WordTypes);

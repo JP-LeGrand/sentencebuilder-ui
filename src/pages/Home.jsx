@@ -77,6 +77,7 @@ const Home = (props) => {
 
     setOpen(false);
   };
+
   return (
     <Grid container>
       <Grid item xs={12}>
