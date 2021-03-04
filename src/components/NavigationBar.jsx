@@ -5,6 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 import history from "../history";
+import * as Images from "../resources/Images";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     color: "#fff",
+  },
+  logo: {
+    width: "200px",
+    height: "200px",
   },
 }));
 
@@ -29,7 +34,7 @@ const NavigationBar = () => {
           variant="h4"
           className={classes.title}
         >
-          Sentence Builder
+          <img src={Images.SBLogoPng} className={classes.logo} />
         </Link>
         <Button onClick={() => history.push("/History")} color="inherit">
           Sentence History
