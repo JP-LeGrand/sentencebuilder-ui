@@ -3,13 +3,7 @@
   "name": "Sentence Builder App",
   "icons": [
     {
-      "src": "../src/images/SentenceBuilder.png",
-      "type": "image/png",
-      "sizes": "192x192",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "../src/images/SentenceBuilderBlackLogo.png",
+      "src": "SentenceBuilderBlackLogo.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
