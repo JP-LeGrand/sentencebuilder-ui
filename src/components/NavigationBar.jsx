@@ -34,7 +34,7 @@ const NavigationBar = () => {
           variant="h4"
           className={classes.title}
         >
-          <img src={Images.SBLogoPng} className={classes.logo} />
+          <img src={Images.SBLogoPng} className={classes.logo} alt="SB Logo" />
         </Link>
         <Button onClick={() => history.push("/History")} color="inherit">
           Sentence History
