@@ -12,6 +12,9 @@
 
 //Manifest.json Is a simple JSON file that gives you, the ability to control how your app appears to the user and define its appearance at launch
 
+// eslint-disable-next-line no-restricted-globals
+const ignored = self.__WB_MANIFEST;
+
 const isLocalhost = Boolean(
   window.location.hostname === "localhost" ||
     // [::1] is the IPv6 localhost address.
