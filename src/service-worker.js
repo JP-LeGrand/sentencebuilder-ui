@@ -43,6 +43,7 @@ export function register() {
       if (!isLocalhost) {
         // Is not local host. Just register service worker
         registerValidSW(swUrl);
+        cacheStaticFiles();
       } else {
         // This is running on localhost. Lets check if a service worker still exists or not.
         checkValidServiceWorker(swUrl);
@@ -113,4 +114,21 @@ export function unregister() {
       registration.unregister();
     });
   }
+}
+
+//This event listener triggers when the service worker is first installed.
+function cacheStaticFiles() {
+  //caching files as this will save the user data
+  window.addEventListener("install", function (event) {
+    event.waitUntil(
+      caches.open(cacheName).then(function (cache) {
+        return cache.addAll([
+          "/src/images/SentenceBuilder.png",
+          "/src/images/SentenceBuilderBlackLogo.png",
+          "/public/SentenceBuilder.png",
+          "/public/SentenceBuilderBlackLogo.png",
+        ]);
+      })
+    );
+  });
 }
