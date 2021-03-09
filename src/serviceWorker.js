@@ -38,8 +38,8 @@ export function register() {
 
     window.addEventListener("load", () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
-      const isLocal = !isLocalhost ?? false;
-      if (!isLocal) {
+
+      if (!isLocalhost) {
         // Is not local host. Just register service worker
         registerValidSW(swUrl);
         cacheStaticFiles();
