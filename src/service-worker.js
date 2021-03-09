@@ -121,7 +121,7 @@ function cacheStaticFiles() {
   //caching files as this will save the user data
   window.addEventListener("install", function (event) {
     event.waitUntil(
-      caches.open(cacheName).then(function (cache) {
+      caches.open("Sb-Cache").then(function (cache) {
         return cache.addAll([
           "/src/images/SentenceBuilder.png",
           "/src/images/SentenceBuilderBlackLogo.png",
